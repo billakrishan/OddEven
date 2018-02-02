@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>Score.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Score.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.billak.oddeven; 
+ 
+ 
+</span><span class="s0">import </span><span class="s1">android.util.Log; 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.File; 
+</span><span class="s0">import </span><span class="s1">java.io.FileNotFoundException; 
+</span><span class="s0">import </span><span class="s1">java.io.PrintWriter; 
+</span><span class="s0">import </span><span class="s1">java.math.BigDecimal; 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList; 
+ 
+</span><span class="s0">public class </span><span class="s1">Score { 
+    </span><span class="s0">private </span><span class="s1">String batsmanName=</span><span class="s2">&quot;&quot;</span><span class="s1">; 
+    </span><span class="s0">private int </span><span class="s1">totalScore; 
+    </span><span class="s0">private </span><span class="s1">ArrayList&lt;String&gt; ScoreList; 
+    </span><span class="s0">private int </span><span class="s1">totalBalls; 
+    </span><span class="s0">private </span><span class="s1">BigDecimal totalOvers; 
+ 
+ 
+    </span><span class="s0">public </span><span class="s1">Score(){ 
+        ScoreList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;String&gt;(); 
+        totalScore=</span><span class="s3">0</span><span class="s1">; 
+        totalBalls=</span><span class="s3">0</span><span class="s1">; 
+        totalOvers=</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s2">&quot;0&quot;</span><span class="s1">); 
+ 
+    } 
+    </span><span class="s0">public void </span><span class="s1">setBatsmanName(String batsmanName){ 
+        batsmanName=</span><span class="s0">this</span><span class="s1">.batsmanName; 
+    } 
+    </span><span class="s0">public void </span><span class="s1">addBallToOver(){ 
+ 
+ 
+        BigDecimal increment = </span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s2">&quot;0.1&quot;</span><span class="s1">); 
+        totalOvers=totalOvers.add(increment); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setTotalOvers(</span><span class="s0">double </span><span class="s1">totalOvers){ 
+        </span><span class="s0">this</span><span class="s1">.totalOvers=</span><span class="s0">new </span><span class="s1">BigDecimal(Double.toString(totalOvers)); 
+    } 
+    </span><span class="s0">public </span><span class="s1">BigDecimal getTotalOvers(){ 
+        </span><span class="s0">return </span><span class="s1">totalOvers; 
+    } 
+    </span><span class="s0">public void </span><span class="s1">addBall(){ 
+        totalBalls+=</span><span class="s3">1</span><span class="s1">; 
+    } 
+ 
+ 
+    </span><span class="s0">public int </span><span class="s1">getTotalBalls(){ 
+        </span><span class="s0">return </span><span class="s1">totalBalls; 
+    } 
+ 
+    </span><span class="s0">public int </span><span class="s1">getTotalScore(){ 
+        calculateTotalScore(); 
+        </span><span class="s0">return </span><span class="s1">totalScore; 
+    } 
+    </span><span class="s0">public void </span><span class="s1">addScore(</span><span class="s0">int </span><span class="s1">score){ 
+ 
+        ScoreList.add(Integer.toString(score)); 
+ 
+    } 
+    </span><span class="s0">private void </span><span class="s1">calculateTotalScore(){ 
+        </span><span class="s0">int </span><span class="s1">tempScore=</span><span class="s3">0</span><span class="s1">; 
+        </span><span class="s0">for</span><span class="s1">(String x : ScoreList){ 
+            tempScore+=Integer.parseInt(x); 
+        } 
+        totalScore=tempScore; 
+    } 
+    </span><span class="s0">public void </span><span class="s1">addScoreToFile(){ 
+        File file=</span><span class="s0">new </span><span class="s1">File(</span><span class="s2">&quot;data.dat&quot;</span><span class="s1">); 
+        </span><span class="s4">/** 
+        try { 
+            PrintWriter write = new PrintWriter(file); 
+            for (String str:ScoreList 
+                 ) { 
+                write.append(str+&quot;\n&quot;); 
+            } 
+        } catch (FileNotFoundException e) { 
+            e.printStackTrace(); 
+        } 
+         **/</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public </span><span class="s1">String toString(){ 
+        </span><span class="s0">return </span><span class="s1">batsmanName+</span><span class="s2">&quot; Scored &quot;</span><span class="s1">+totalScore+</span><span class="s2">&quot; runs in &quot;</span><span class="s1">+totalBalls+</span><span class="s2">&quot; balls&quot;</span><span class="s1">; 
+    } 
+</span><span class="s0">public void </span><span class="s1">reset(){ 
+    batsmanName=</span><span class="s2">&quot;&quot;</span><span class="s1">; 
+    ScoreList = </span><span class="s0">new </span><span class="s1">ArrayList&lt;String&gt;(); 
+    totalScore=</span><span class="s3">0</span><span class="s1">; 
+    totalBalls=</span><span class="s3">0</span><span class="s1">; 
+    totalOvers=</span><span class="s0">new </span><span class="s1">BigDecimal(</span><span class="s2">&quot;0&quot;</span><span class="s1">); 
+} 
+} 
+</span></pre>
+</body>
+</html>

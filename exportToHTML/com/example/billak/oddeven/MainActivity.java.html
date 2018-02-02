@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.billak.oddeven; 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">import </span><span class="s1">org.w3c.dom.Text; 
+ 
+</span><span class="s0">import </span><span class="s1">java.math.BigDecimal; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+    </span><span class="s0">public static final </span><span class="s1">String MY_VALUE=</span><span class="s2">&quot;VALUE&quot;</span><span class="s1">; 
+    </span><span class="s0">private </span><span class="s1">EditText txtOne; 
+    </span><span class="s0">private </span><span class="s1">EditText txtTwo; 
+    </span><span class="s0">private </span><span class="s1">Button btnOne; 
+    </span><span class="s0">private </span><span class="s1">TextView totalBalls; 
+    </span><span class="s0">private </span><span class="s1">TextView totalScore; 
+    </span><span class="s0">private </span><span class="s1">TextView totalOvers; 
+    </span><span class="s0">private </span><span class="s1">Score score; 
+ 
+ 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+ 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        txtOne=(EditText)findViewById(R.id.edittxtOne); 
+        txtTwo=(EditText)findViewById(R.id.edittxtTwo); 
+         btnOne = (Button) findViewById(R.id.btnOne); 
+        totalScore=(TextView)findViewById(R.id.totalScoreC); 
+        totalBalls=(TextView)findViewById(R.id.totalBallsC); 
+        totalOvers=(TextView)findViewById(R.id.totalOversC); 
+ 
+        btnOne.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+                                      @Override 
+                                      </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                                          hitScore(); 
+                                      } 
+                                  } 
+ 
+        ); 
+        score=</span><span class="s0">new </span><span class="s1">Score(); 
+ 
+ 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onResume(){ 
+        </span><span class="s0">super</span><span class="s1">.onResume(); 
+        txtOne.clearComposingText(); 
+        txtTwo.clearComposingText(); 
+        txtTwo.setVisibility(View.INVISIBLE); 
+        score.reset(); 
+        DisplayScore(score); 
+ 
+    } 
+</span><span class="s0">public  void </span><span class="s1">hitScore(){ 
+    </span><span class="s0">int </span><span class="s1">user_score=Integer.parseInt(txtOne.getText().toString()); 
+    </span><span class="s0">int </span><span class="s1">machine_score=genMachineScore(); 
+    txtTwo.setVisibility(View.VISIBLE); 
+    txtTwo.setText(Integer.toString(machine_score)); 
+    txtTwo.setEnabled(</span><span class="s0">false</span><span class="s1">); 
+ 
+ 
+    </span><span class="s0">if</span><span class="s1">(checkScore(user_score,machine_score).equals(</span><span class="s2">&quot;notOut&quot;</span><span class="s1">)){ 
+            score.addScore(user_score); 
+        Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">,</span><span class="s2">&quot;Score Added</span><span class="s0">\n</span><span class="s2">NextTurn&quot;</span><span class="s1">,Toast.LENGTH_SHORT).show(); 
+ 
+    }</span><span class="s0">else</span><span class="s1">{ 
+        Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">,</span><span class="s2">&quot;You are Out!&quot;</span><span class="s1">,Toast.LENGTH_SHORT).show(); 
+        BatsmanList.addtobatsmanList(score.toString()); 
+ 
+        declareOut(); 
+    } 
+ 
+ 
+    score.addBall(); 
+    score.addBallToOver(); 
+ 
+    </span><span class="s0">if</span><span class="s1">(score.getTotalBalls()% </span><span class="s3">6 </span><span class="s1">== </span><span class="s3">0 </span><span class="s1">){ 
+        score.setTotalOvers(Math.round(score.getTotalOvers().doubleValue())); 
+    } 
+ 
+ 
+ 
+ 
+    DisplayScore(score); 
+ 
+ 
+} 
+ 
+    </span><span class="s0">public int </span><span class="s1">genMachineScore(){ 
+        Random random= </span><span class="s0">new </span><span class="s1">Random(); 
+        </span><span class="s0">int </span><span class="s1">machine_score=random.getRandomNumber(</span><span class="s3">1</span><span class="s1">,</span><span class="s3">10</span><span class="s1">); 
+ 
+        </span><span class="s0">return </span><span class="s1">machine_score; 
+    } 
+    </span><span class="s0">public </span><span class="s1">String checkScore(</span><span class="s0">int </span><span class="s1">user_score,</span><span class="s0">int </span><span class="s1">machine_score){ 
+        </span><span class="s0">if</span><span class="s1">(user_score != machine_score) </span><span class="s0">return </span><span class="s2">&quot;notOut&quot;</span><span class="s1">; 
+        </span><span class="s0">else return </span><span class="s2">&quot;Out&quot;</span><span class="s1">; 
+    } 
+    </span><span class="s0">public void </span><span class="s1">DisplayScore(Score score){ 
+        totalBalls.setText(Integer.toString(score.getTotalBalls())); 
+        totalScore.setText(Integer.toString(score.getTotalScore())); 
+        totalOvers.setText(Double.toString((score.getTotalOvers().doubleValue()))); 
+ 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">declareOut(){ 
+        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this</span><span class="s1">, Activity2.</span><span class="s0">class</span><span class="s1">); 
+        intent.putExtra(MY_VALUE,Integer.toString(Math.round(score.getTotalScore()))); 
+        startActivity(intent); 
+ 
+    } 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Activity2.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,0); }
+.s1 { color: rgb(0,0,128); font-weight: bold; }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Activity2.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0"> 
+</span><span class="s1">package </span><span class="s0">com.example.billak.oddeven; 
+ 
+</span><span class="s1">import </span><span class="s0">android.content.Intent; 
+</span><span class="s1">import </span><span class="s0">android.support.v7.app.AppCompatActivity; 
+</span><span class="s1">import </span><span class="s0">android.os.Bundle; 
+</span><span class="s1">import </span><span class="s0">android.util.Log; 
+</span><span class="s1">import </span><span class="s0">android.view.View; 
+</span><span class="s1">import </span><span class="s0">android.widget.Button; 
+</span><span class="s1">import </span><span class="s0">android.widget.TextView; 
+</span><span class="s1">import </span><span class="s0">android.widget.Toast; 
+ 
+</span><span class="s1">import </span><span class="s0">org.w3c.dom.Text; 
+ 
+</span><span class="s1">public class </span><span class="s0">Activity2 </span><span class="s1">extends </span><span class="s0">AppCompatActivity { 
+    </span><span class="s1">private </span><span class="s0">TextView declareOut; 
+ 
+    </span><span class="s1">private </span><span class="s0">TextView finalScore; 
+    </span><span class="s1">private </span><span class="s0">Button btnnextBatsman; 
+    </span><span class="s1">private </span><span class="s0">Button btnExit; 
+    </span><span class="s1">private </span><span class="s0">TextView batsmanList; 
+ 
+ 
+    @Override 
+    </span><span class="s1">protected void </span><span class="s0">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s1">super</span><span class="s0">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_3); 
+        declareOut = (TextView) findViewById(R.id.declareOut); 
+ 
+        finalScore = (TextView) findViewById(R.id.finalScoreC); 
+ 
+        Intent intent = getIntent(); 
+        String finalScoreC = intent.getStringExtra(MainActivity.MY_VALUE); 
+ 
+        finalScore.setText(</span><span class="s2">&quot;You Scored &quot; </span><span class="s0">+ finalScoreC + </span><span class="s2">&quot; Runs&quot;</span><span class="s0">); 
+ 
+        btnnextBatsman = (Button) findViewById(R.id.nextBatsman); 
+        btnExit = (Button) findViewById(R.id.Exit); 
+ 
+        btnnextBatsman.setOnClickListener(</span><span class="s1">new </span><span class="s0">View.OnClickListener() { 
+                                      @Override 
+                                      </span><span class="s1">public void </span><span class="s0">onClick(View v) { 
+                                          nextBatsman(); 
+                                      } 
+                                  } 
+        ); 
+ 
+        btnExit.setOnClickListener(</span><span class="s1">new </span><span class="s0">View.OnClickListener() { 
+            @Override 
+            </span><span class="s1">public void </span><span class="s0">onClick(View v) { 
+                exit(); 
+            } 
+        }); 
+ 
+        batsmanList=(TextView)findViewById(R.id.batsmanList); 
+        batsmanList.setText(BatsmanList.printList()); 
+    } 
+ 
+ 
+    </span><span class="s1">private void </span><span class="s0">nextBatsman() { 
+        finish(); 
+    } 
+ 
+    </span><span class="s1">private void </span><span class="s0">exit(){ 
+        </span><span class="s3">//Toast.makeText(Activity2.this,&quot;Thankyou!...&quot;,Toast.LENGTH_SHORT).show();</span><span class="s0"> 
+        finish(); 
+        System.exit(</span><span class="s4">0</span><span class="s0">); 
+    } 
+}</span></pre>
+</body>
+</html>
